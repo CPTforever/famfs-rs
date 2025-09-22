@@ -4,7 +4,7 @@ use std::{ffi::CString, ptr::NonNull};
 use std::cell::OnceCell;
 
 use crate::meta::{famfs_log_fmap, famfs_log_fmap_union_interleaved_extent, famfs_system_role, FAMFS_ALLOC_UNIT, FAMFS_LOG_OFFSET, FAMFS_MAX_PATHLEN, FAMFS_SUPERBLOCK_SIZE};
-use crate::{Famfs, FamfsFile};
+use crate::{FamfsFile};
 use super::meta::{famfs_interleave_param, famfs_log, famfs_superblock, Extent};
 use super::bitmap::Bitmap;
 

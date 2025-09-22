@@ -348,7 +348,7 @@ impl famfs_log {
         return true;
     }
 
-    // this assumes that the famfs_log exists in a memory mapped z
+    // this assumes that the famfs_log exists in a memory mapped
     // adjacent to it's log entries which are also memory mapped
     unsafe fn get_entry(&self, i: usize) -> *const famfs_log_entry {
         let self_ptr = self as *const famfs_log;
@@ -424,7 +424,7 @@ impl famfs_log {
                         fm_gid: gid_t, 
                         fm_mode: mode_t, 
                         fm_relpath: relpath, 
-                        fm_fmap: *fmap
+                        fm_fmap: fmap.clone()
                     })
             },
             famfs_log_entry_crc: 0,

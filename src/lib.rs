@@ -2,10 +2,38 @@ pub mod meta;
 pub mod internal;
 pub mod bitmap;
 
-use std::{io::{Read, Write}, path::Path};
+use std::{collections::HashMap, io::{Read, Write}, path::Path, ptr::NonNull};
+use meta::{famfs_superblock, famfs_log, FAMFS_MAX_PATHLEN};
+
+
+trait FamfsMetadataInterface {
+    fn superblock(&mut self) -> NonNull<famfs_superblock>;
+
+    fn log(&mut self) -> NonNull<famfs_log>;
+
+    fn commit(&mut self);
+}
+
+enum DirtyPages {
+    superblock(usize),
+    log(usize)
+}
+struct MMAPed {
+    superblock: NonNull<famfs_superblock>,
+    log: NonNull<famfs_log>,
+    dirty_pages: Vec<DirtyPages>
+}
 
 struct Famfs {
-    
+    interface: Box<dyn FamfsMetadataInterface>
+}
+
+impl Famfs {
+    fn new(interface: Box<dyn FamfsMetadataInterface>) -> Self {
+        Self {
+            interface: interface
+        }
+    }
 }
 
 pub struct FamfsFile {
@@ -59,9 +87,3 @@ impl Write for FamfsFile {
     }
 }
 
-impl Famfs {
-    // Loads the struct 
-    fn from_base_ptr() {
-        
-    }
-}
